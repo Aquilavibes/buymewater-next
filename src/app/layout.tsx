@@ -2,7 +2,7 @@ import "./globals.css";
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { ErrorBoundary } from "@/app/components/error-boundary"
-import { Providers } from "./providers";
+
 
 export const metadata: Metadata = {
   title: "BuyMeWater - Support Creators with Sui",
@@ -51,7 +51,7 @@ html {
       </head>
       <body className="custom-scrollbar antialiased">
         <ErrorBoundary>{children}</ErrorBoundary>
-        <Providers>{children}</Providers>
+       
       </body>
     </html>
   )

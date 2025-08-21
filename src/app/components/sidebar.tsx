@@ -44,7 +44,7 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
   }
 
   return (
-    <div className="h-[500px] flex flex-col bg-gradient-to-br from-sky-900/20 via-black/40 to-purple-900/20 backdrop-blur-xl border-r border-sky-500/20 ">
+    <div className="h-[700px] fixed flex flex-col bg-gradient-to-br from-sky-900/20 via-black/40 to-purple-900/20 backdrop-blur-xl border-r border-sky-500/20 ">
       {/* Logo */}
       <div className="flex items-center justify-center h-16 px-6 border-b border-sky-500/20">
         <svg className="h-8 w-8 text-sky-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
