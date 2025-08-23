@@ -12,6 +12,7 @@ import {
   Settings,
   ArrowUpRight,
   ChevronRight,
+  Droplets,
 } from "lucide-react"
 
 interface SidebarProps {
@@ -47,9 +48,7 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
     <div className="h-[700px] fixed flex flex-col bg-gradient-to-br from-sky-900/20 via-black/40 to-purple-900/20 backdrop-blur-xl border-r border-sky-500/20 ">
       {/* Logo */}
       <div className="flex items-center justify-center h-16 px-6 border-b border-sky-500/20">
-        <svg className="h-8 w-8 text-sky-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-        </svg>
+      <Droplets className="h-8 w-8 text-sky-400" />
         <span className="text-xl font-bold bg-gradient-to-r from-sky-400 to-sky-600 bg-clip-text text-transparent">
           BuyMeWater
         </span>
