@@ -54,7 +54,7 @@ export default function LandingPage() {
             >
               Stats
             </button>
-            <Link href="/dashboard">
+            <Link href="/login">
               <button className="bg-sky-500 hover:bg-sky-600 text-black font-bold px-6 py-2 rounded-lg transition-colors tracking-wide uppercase">
                 Get Started
               </button>
