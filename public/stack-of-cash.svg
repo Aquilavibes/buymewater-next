@@ -1,0 +1,6 @@
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+  <rect x="2" y="7" width="20" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="#A3E635"/>
+  <rect x="4" y="9" width="16" height="6" rx="1" stroke="#65A30D" stroke-width="1.2" fill="#D9F99D"/>
+  <circle cx="12" cy="12" r="2" fill="#65A30D"/>
+  <path d="M6 7v10M18 7v10" stroke="#65A30D" stroke-width="1.2"/>
+</svg>

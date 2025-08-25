@@ -210,7 +210,11 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="bg-gradient-to-br from-sky-400 to-sky-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-black font-black text-xl">
-                1
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <rect x="2" y="7" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M2 10h20" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="17" cy="15" r="1.5" fill="currentColor"/>
+              </svg>
               </div>
               <h3 className="text-xl font-black mb-4 tracking-tight uppercase">Connect Wallet</h3>
               <p className="text-gray-300 font-normal">
@@ -220,7 +224,14 @@ export default function LandingPage() {
 
             <div className="text-center">
               <div className="bg-gradient-to-br from-sky-400 to-sky-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-black font-black text-xl">
-                2
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="#0000"/>
+            <rect x="4" y="9" width="16" height="6" rx="1" stroke="#0000" stroke-width="1.2" fill=""/>
+            <circle cx="12" cy="12" r="2" fill="#0000"/>
+            <path d="M6 7v10M18 7v10" stroke="#0000" stroke-width="1.2"/>
+          </svg>
+
+
               </div>
               <h3 className="text-xl font-black mb-4 tracking-tight uppercase">Choose Amount</h3>
               <p className="text-gray-300 font-normal">
@@ -230,7 +241,9 @@ export default function LandingPage() {
 
             <div className="text-center">
               <div className="bg-gradient-to-br from-sky-400 to-sky-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-black font-black text-xl">
-                3
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M3 20l18-8-18-8v7l13 1-13 1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              </svg>
               </div>
               <h3 className="text-xl font-black mb-4 tracking-tight uppercase">Send Support</h3>
               <p className="text-gray-300 font-normal">
