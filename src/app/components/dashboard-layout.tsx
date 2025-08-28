@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Sidebar } from "@/app/components/sidebar"
 import { TopNavigation } from "@/app/components/top-navigation"
 import { cn } from "@/app/lib/utils"
+import ProtectedRoute from "@/app/components/protectedRoute"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -21,6 +22,8 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
   
 
   return (
+    <>
+    <ProtectedRoute>
     <div className="min-h-screen bg-black text-white flex flex-col">
       <TopNavigation onToggleSidebar={toggleSidebar} />
 
@@ -47,5 +50,7 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
         <main className={cn("flex-1 p-6 overflow-y-auto space-y-6 custom-scrollbar", className)}>{children}</main>
       </div>
     </div>
+    </ProtectedRoute>
+    </>
   )
 }

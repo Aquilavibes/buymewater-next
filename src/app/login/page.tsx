@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc"
 import { HiOutlineShieldCheck, HiOutlineLightningBolt } from "react-icons/hi"
 import { auth, provider } from "@/app/lib/firebase"
 import { signInWithPopup, onAuthStateChanged } from "firebase/auth"
-import ProtectedRoute from "@/app/components/protectedRoute"
+
 
 
 export default function AuthPage() {
@@ -39,7 +39,7 @@ export default function AuthPage() {
 
   return (
     <>
-    <ProtectedRoute>
+    
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="relative overflow-hidden rounded-3xl border border-sky-500/20 bg-gray-900/60 backdrop-blur-xl p-8 shadow-2xl">
@@ -92,7 +92,7 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
-    </ProtectedRoute>
+    
     </>
   )
 }
