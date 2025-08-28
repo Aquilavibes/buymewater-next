@@ -65,13 +65,7 @@ export function TopNavigation({ onToggleSidebar }: TopNavigationProps) {
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse" />
           </button>
 
-          {/* Sign Out Button */}
-          <button
-            onClick={handleSignOut}
-            className="p-2 rounded-2xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-          >
-            Sign Out
-          </button>
+          
         </div>
       </div>
     </header>

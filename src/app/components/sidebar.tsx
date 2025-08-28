@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { auth, provider } from "@/app/lib/firebase"
 import Link from "next/link"
 import {
   LayoutDashboard,
@@ -21,7 +22,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
-  const pathname = usePathname()
+  const router = useRouter()
   const [activeItem, setActiveItem] = useState("")
 
   const navigationItems = [
@@ -34,15 +35,22 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
     { name: "Withdraw", icon: ArrowUpRight, href: "/withdraw" },
   ]
 
-  useEffect(() => {
-    const currentItem = navigationItems.find((item) => item.href === pathname)
-    setActiveItem(currentItem?.name || "Dashboard")
-  }, [pathname])
-
+  
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName)
     onCloseSidebar()
   }
+
+  const handleSignOut = async () => {
+      try {
+        await signOut(auth);
+        
+        router.push("/");
+      } catch (error) {
+        console.error("Sign out error:", error);
+      }
+    };
+  
 
   return (
     <div className="h-[700px] fixed flex flex-col bg-gradient-to-br from-sky-900/20 via-black/40 to-purple-900/20 backdrop-blur-xl border-r border-sky-500/20 ">
@@ -77,7 +85,14 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
             </Link>
           )
         })}
+       
       </nav>
+      <button
+            onClick={handleSignOut}
+            className="p-2 rounded-md bg-red-500 text-white mt-[100px] w-[200px]"
+          >
+            Sign Out
+          </button>
 
       {/* User Profile */}
       <div className="p-4 border-t border-sky-500/20">
@@ -87,6 +102,7 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
             alt="Profile"
             className="w-10 h-10 rounded-full border-2 border-sky-400/50"
           />
+          
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-white truncate">Alex Chen</p>
             <p className="text-xs text-sky-400 truncate">@alexchen</p>
