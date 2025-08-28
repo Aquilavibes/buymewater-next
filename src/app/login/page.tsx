@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from "next/navigation"; // ✅ App Router import
 import { FcGoogle } from 'react-icons/fc'
 import { auth } from "@/app/lib/firebase";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
@@ -8,19 +9,24 @@ import { HiOutlineShieldCheck, HiOutlineLightningBolt } from 'react-icons/hi'
 
 export default function AuthPage() {
   const [user, setUser] = useState(null);
+  const router = useRouter(); // ✅ useRouter (renamed to router for clarity)
 
+  // ✅ Sign In function
   const signIn = async () => {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      if (result.user) {
+        setUser(result.user); // save logged in user
+        router.push("/dashboard"); // navigate after login
+      }
+    } catch (err) {
+      console.error("Sign in error:", err);
+      alert("Google sign in failed");
+    }
   };
-
-  const logOut = async () => {
-    await signOut(auth);
-    setUser(null);
-  }
   
-
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
@@ -45,21 +51,17 @@ export default function AuthPage() {
               <h2 className="text-2xl font-bold text-white">Welcome Back</h2>
               <p className="text-gray-400">Sign in to access your creator dashboard</p>
             </div>
-
+            <p className="text-gray-400">
+                {user ? "You’re signed in 🚀" : "Sign in to access your creator dashboard"}
+              </p>
             {/* Google Sign In Button */}
             <button
-              onClick={signIn}
-              
-              className="w-full flex items-center justify-center space-x-3 bg-black/70 hover:bg-black/50 border-2 border-sky-500/40 hover:border-sky-400 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-sky-500/20 disabled:opacity-70 disabled:cursor-not-allowed group"
-            >
-             
-                
-      
-                  <FcGoogle className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                  <span>Continue with Google</span>
-              
-              
-            </button>
+                onClick={signIn}
+                className="w-full flex items-center justify-center space-x-3 bg-black/70 hover:bg-black/50 border-2 border-sky-500/40 hover:border-sky-400 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-sky-500/20 disabled:opacity-70 disabled:cursor-not-allowed group"
+              >
+                <FcGoogle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                <span>Continue with Google</span>
+              </button>
 
             {/* Divider */}
             <div className="relative">
