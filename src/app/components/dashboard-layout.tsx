@@ -18,6 +18,7 @@ export function DashboardLayout({ children, className }: DashboardLayoutProps) {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
   }
+  
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
