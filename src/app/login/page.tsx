@@ -2,19 +2,24 @@
 
 import React, { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
+import { auth } from "@/app/lib/firebase";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { HiOutlineShieldCheck, HiOutlineLightningBolt } from 'react-icons/hi'
 
 export default function AuthPage() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [user, setUser] = useState(null);
 
-  const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    // Simulate authentication process
-    setTimeout(() => {
-      setIsLoading(false)
-      alert('Google Sign-In integration would be implemented here with NextAuth.js')
-    }, 2000)
+  const signIn = async () => {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    
+  };
+
+  const logOut = async () => {
+    await signOut(auth);
+    setUser(null);
   }
+  
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
@@ -43,21 +48,17 @@ export default function AuthPage() {
 
             {/* Google Sign In Button */}
             <button
-              onClick={handleGoogleSignIn}
-              disabled={isLoading}
+              onClick={signIn}
+              
               className="w-full flex items-center justify-center space-x-3 bg-black/70 hover:bg-black/50 border-2 border-sky-500/40 hover:border-sky-400 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-sky-500/20 disabled:opacity-70 disabled:cursor-not-allowed group"
             >
-              {isLoading ? (
-                <>
-                  <div className="w-6 h-6 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
-                  <span>Connecting...</span>
-                </>
-              ) : (
-                <>
+             
+                
+      
                   <FcGoogle className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span>Continue with Google</span>
-                </>
-              )}
+              
+              
             </button>
 
             {/* Divider */}
