@@ -1,8 +1,8 @@
-import "./globals.css";
+import "./globals.css"
 import type React from "react"
+import Script from "next/script"
 import type { Metadata, Viewport } from "next"
 import { ErrorBoundary } from "@/app/components/error-boundary"
-
 
 export const metadata: Metadata = {
   title: "BuyMeWater - Support Creators with Sui",
@@ -13,18 +13,22 @@ export const metadata: Metadata = {
   authors: [{ name: "BuyMeWater Team" }],
   openGraph: {
     title: "BuyMeWater - Support Creators with Sui",
-    description: "A decentralized platform for supporting creators with Sui blockchain donations.",
+    description:
+      "A decentralized platform for supporting creators with Sui blockchain donations.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "BuyMeWater - Support Creators with Sui",
-    description: "A decentralized platform for supporting creators with Sui blockchain donations.",
+    description:
+      "A decentralized platform for supporting creators with Sui blockchain donations.",
+  },
+  icons: {
+    icon: "/favicon.ico", // <-- favicon handled here
   },
 }
 
-// 👇 new export for Next.js 13+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -36,22 +40,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
+      <head><script src="https://cdn.tailwindcss.com"></script></head>
+      
 
-        <style>{`
-html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-        `}</style>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
       <body className="custom-scrollbar antialiased">
+        
         <ErrorBoundary>{children}</ErrorBoundary>
-       
       </body>
     </html>
   )

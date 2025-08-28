@@ -1,8 +1,9 @@
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "tailwindcss";
+;
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -96,7 +97,14 @@
     padding: 0;
     margin: 0;
   }
-  html,
+  
+    html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+  
   body {
     max-width: 100vw;
     overflow-x: hidden;
