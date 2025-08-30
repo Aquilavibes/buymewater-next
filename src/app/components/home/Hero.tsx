@@ -34,13 +34,13 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/dashboard">
+              <Link href="/login">
                 <button className="bg-sky-500 hover:bg-sky-600 text-black font-bold px-8 py-4 text-lg rounded-lg transition-colors flex items-center tracking-wide uppercase">
                   Start Supporting Creators
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </Link>
-              <Link href="/dashboard">
+              <Link href="/login">
                 <button
                   
                   className="border border-sky-500 text-sky-400 hover:bg-sky-500/10 px-8 py-4 text-lg bg-transparent rounded-lg transition-colors tracking-wide uppercase font-bold"
@@ -199,7 +199,7 @@ const Hero = () => {
             <p className="text-xl text-gray-300 mb-8 font-normal">
               Join thousands of supporters who are already making a difference in the creator economy.
             </p>
-            <Link href="/dashboard">
+            <Link href="/login">
               <button className="bg-sky-500 hover:bg-sky-600 text-black font-bold px-8 py-4 text-lg rounded-lg transition-colors flex items-center mx-auto tracking-wide uppercase">
                 Get Started Now
                 <ArrowRight className="ml-2 h-5 w-5" />

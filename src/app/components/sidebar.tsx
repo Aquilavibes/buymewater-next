@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { auth, provider } from "@/app/lib/firebase"
+import { IoExitOutline } from "react-icons/io5";
 import Link from "next/link"
 import {
   LayoutDashboard,
@@ -15,6 +15,9 @@ import {
   ChevronRight,
   Droplets,
 } from "lucide-react"
+ import {  signOut } from "firebase/auth"
+import { auth } from "../lib/firebase"
+
 
 interface SidebarProps {
   isOpen: boolean
@@ -41,16 +44,18 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
     onCloseSidebar()
   }
 
+
+
   const handleSignOut = async () => {
-      try {
-        await signOut(auth);
-        
-        router.push("/");
-      } catch (error) {
-        console.error("Sign out error:", error);
-      }
-    };
-  
+    try {
+      await signOut(auth);
+      // ✅ Redirect to homepage
+      router.push("/");
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
+  };
+
 
   return (
     <div className="h-[700px] fixed flex flex-col bg-gradient-to-br from-sky-900/20 via-black/40 to-purple-900/20 backdrop-blur-xl border-r border-sky-500/20 ">
@@ -86,13 +91,9 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
           )
         })}
        
-      </nav>
-      <button
-            onClick={handleSignOut}
-            className="p-2 rounded-md bg-red-500 text-white mt-[100px] w-[200px]"
-          >
-            Sign Out
-          </button>
+     <br />
+     <br />
+      
 
       {/* User Profile */}
       <div className="p-4 border-t border-sky-500/20">
@@ -110,6 +111,14 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
           <ChevronRight className="h-4 w-4 text-sky-400" />
         </div>
       </div>
+      <button
+        onClick={handleSignOut}
+        className="flex items-center gap-2 p-2 rounded-md    text-red  "
+      >
+        <IoExitOutline className="h-5 w-5" />
+        Sign Out
+      </button>
+       </nav>
     </div>
   )
 }
