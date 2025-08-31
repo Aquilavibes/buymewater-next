@@ -1,9 +1,8 @@
 "use client"
 
 import { Menu, Search, Bell } from "lucide-react"
-import {  signOut } from "firebase/auth"
-import { auth } from "../lib/firebase"
-
+import { WalletKitProvider } from "@mysten/wallet-kit"
+import WalletConnect from '../components/WalletConnect'
 import { useRouter } from "next/navigation";
 interface TopNavigationProps {
   onToggleSidebar: () => void
@@ -12,15 +11,7 @@ interface TopNavigationProps {
 export function TopNavigation({ onToggleSidebar }: TopNavigationProps) {
   const router = useRouter();
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      // ✅ Redirect to homepage
-      router.push("/");
-    } catch (error) {
-      console.error("Sign out error:", error);
-    }
-  };
+ 
 
   return (
     <header className="bg-black/50 backdrop-blur-xl border-b border-sky-500/20 sticky top-0 z-40">
@@ -54,16 +45,14 @@ export function TopNavigation({ onToggleSidebar }: TopNavigationProps) {
           </button>
 
           {/* User profile */}
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-sky-500 to-purple-500 rounded-full flex items-center justify-center">
-              <span className="text-sm font-semibold text-white">JD</span>
-            </div>
-          </div>
+          
 
-          <button className="relative p-2 rounded-lg bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 transition-colors ">
-            Sui Wallet
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse" />
-          </button>
+          
+            
+  <WalletKitProvider enableUnsafeBurner={false}>
+  <WalletConnect/>
+  </WalletKitProvider>
+           
 
           
         </div>
