@@ -54,7 +54,7 @@ export function StatsCard({ title, value, icon, trend, color, className }: Stats
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50 backdrop-blur-xl border border-sky-500/20 p-6 hover:border-sky-400/40 transition-all duration-300 group animate-fade-in-up",
+        "relative overflow-visible rounded-xl bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50 backdrop-blur-xl border border-sky-500/20 p-6 hover:border-sky-400/40 transition-all duration-300 group animate-fade-in-up",
         className,
       )}
     >

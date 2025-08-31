@@ -47,8 +47,8 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard title="Total Balance" value={stats.balance} icon="wallet" trend="+12.5%" color="sky" />
         <StatsCard title="This Month" value={stats.monthlyEarnings} icon="trending-up" trend="+8.2%" color="emerald" />
-        <StatsCard title="Total Supporters" value={stats.supporters} icon="users" trend="+15.3%" color="purple" />
-        <StatsCard title="Success Rate" value={stats.successRate} icon="check-circle" trend="+2.1%" color="blue" />
+        <StatsCard title="Total Supporters" value={stats.supporters} icon="users" trend="+15.3%" color="purple"/>
+        
       </div>
 
       {/* Charts */}

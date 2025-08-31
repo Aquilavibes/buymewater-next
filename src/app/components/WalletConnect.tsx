@@ -16,7 +16,7 @@ export default function ConnectSuiWallet() {
       // ✅ You only pass the wallet name here
       await connect("Slush", { silent: false });
     } catch (err) {
-      console.error("Wallet connection error:", err);
+      alert("Wallet connection error:", err);
       setError("Failed to connect wallet");
     }
   };
@@ -38,7 +38,7 @@ export default function ConnectSuiWallet() {
       <span>
         {isConnected && currentAccount
           ? shortenAddress(currentAccount.address)
-          : "Link Wallet"}
+          : "Sui Wallet"}
       </span>
     </button>
   );
