@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { DashboardLayout } from "@/app/components/dashboard-layout"
 import { Plus, Check, ChevronRight } from "lucide-react"
+import { auth, db } from "@/app/lib/firebase" 
+import { doc, setDoc } from "firebase/firestore"
 
 interface Profile {
   avatar: string
@@ -30,36 +32,28 @@ interface DonationLink {
 export default function Profile() {
   const [profile, setProfile] = useState<Profile>({
     avatar: "/placeholder.svg?height=100&width=100",
-    name: "Alex Chen",
-    handle: "@alexchen",
-    bio: "Creator passionate about web3, open-source, and building communities. Buy me water to support my work!",
+    name: "",
+    handle: "",
+    bio: "",
   })
 
   const [socialLinks, setSocialLinks] = useState<SocialLinks>({
-    twitter: "https://twitter.com/alexchen",
-    github: "https://github.com/alexchen",
-    youtube: "https://youtube.com/alexchen",
-    website: "https://alexchen.dev",
+    twitter: "",
+    github: "",
+    youtube: "",
+    website: "",
   })
 
-  const donationLinks: DonationLink[] = [
+  const [donationLinks] = useState<DonationLink[]>([
     {
       id: 1,
       name: "General Support",
-      url: "buymewater.app/alexchen",
+      url: "buymewater.app/username",
       amount: "Any",
-      clicks: 1247,
-      earnings: "2,840 SUI",
+      clicks: 0,
+      earnings: "0 SUI",
     },
-    {
-      id: 2,
-      name: "Coffee Alternative",
-      url: "buymewater.app/alexchen/coffee",
-      amount: "5 SUI",
-      clicks: 892,
-      earnings: "4,460 SUI",
-    },
-  ]
+  ])
 
   const updateProfile = (field: keyof Profile, value: string) => {
     setProfile((prev) => ({ ...prev, [field]: value }))
@@ -74,11 +68,54 @@ export default function Profile() {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  const saveProfile = () => {
-    console.log("Saving profile:", { profile, socialLinks })
-    // Here you would typically send this data to a backend API
-    alert("Profile saved successfully!")
+  const uploadToCloudinary = async (file: File) => {
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", "your_unsigned_preset") // from Cloudinary
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dfa58do65/image/upload`, {
+      method: "POST",
+      body: formData,
+    })
+    const data = await res.json()
+    return data.secure_url
   }
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const url = await uploadToCloudinary(file)
+      updateProfile("avatar", url)
+    }
+  }
+
+  const cleanObject = (obj: Record<string, any>) => {
+  return Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => [k, v ?? null]) // replace undefined with null
+  )
+}
+
+
+const saveProfile = async () => {
+  const user = auth.currentUser
+  if (!user) return alert("You must be signed in with Google first")
+
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      email: user.email,
+      profile: cleanObject(profile),
+      socialLinks: cleanObject(socialLinks),
+      donationLinks: donationLinks.map((link) => cleanObject(link)),
+      createdAt: new Date().toISOString(),
+    })
+    alert("Profile saved successfully!")
+  } catch (err) {
+    console.error("Error saving profile:", err)
+    alert("Error saving profile")
+  }
+}
+
 
   return (
     <DashboardLayout>
@@ -94,9 +131,10 @@ export default function Profile() {
               alt="Profile Avatar"
               className="w-full h-full rounded-full object-cover border-2 border-sky-400/50"
             />
-            <button className="absolute bottom-0 right-0 bg-sky-500 text-black rounded-full p-1.5 hover:bg-sky-600 transition-colors">
+            <label className="absolute bottom-0 right-0 bg-sky-500 text-black rounded-full p-1.5 hover:bg-sky-600 transition-colors cursor-pointer">
               <Plus className="h-4 w-4" />
-            </button>
+              <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+            </label>
           </div>
           <div className="flex-1 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

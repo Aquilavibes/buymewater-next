@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+
+import { doc, getDoc } from "firebase/firestore"
 import { IoExitOutline } from "react-icons/io5";
 import Link from "next/link"
 import {
@@ -16,7 +18,7 @@ import {
   Droplets,
 } from "lucide-react"
  import {  signOut } from "firebase/auth"
-import { auth } from "../lib/firebase"
+import { auth , db } from "../lib/firebase"
 
 
 interface SidebarProps {
@@ -38,7 +40,25 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
     { name: "Withdraw", icon: ArrowUpRight, href: "/withdraw" },
   ]
 
-  
+   const [name, setName] = useState("")
+  const [handle, setHandle] = useState("")
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const user = auth.currentUser
+      if (!user) return
+
+      const userDoc = await getDoc(doc(db, "users", user.uid))
+      if (userDoc.exists()) {
+        const data = userDoc.data()
+        setName(data.profile?.name || "")
+        setHandle(data.profile?.handle || "")
+      }
+    }
+
+    fetchProfile()
+  }, [])
+
   const handleItemClick = (itemName: string) => {
     setActiveItem(itemName)
     onCloseSidebar()
@@ -105,9 +125,9 @@ export function Sidebar({ isOpen, onCloseSidebar }: SidebarProps) {
           />
           
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-white truncate">Alex Chen</p>
-            <p className="text-xs text-sky-400 truncate">@alexchen</p>
-          </div>
+      <p className="text-sm font-medium text-white truncate">{name}</p>
+      <p className="text-xs text-sky-400 truncate">@{handle}</p>
+    </div>                                                                
           <ChevronRight className="h-4 w-4 text-sky-400" />
         </div>
       </div>
