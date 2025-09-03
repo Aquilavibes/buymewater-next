@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DashboardLayout } from "@/app/components/dashboard-layout"
 import { Plus, Check, ChevronRight } from "lucide-react"
 import { auth, db } from "@/app/lib/firebase" 
-import { doc, setDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc } from "firebase/firestore"
 
 interface Profile {
   avatar: string
@@ -44,7 +44,7 @@ export default function Profile() {
     website: "",
   })
 
-  const [donationLinks] = useState<DonationLink[]>([
+  const [donationLinks, setDonationLinks] = useState<DonationLink[]>([
     {
       id: 1,
       name: "General Support",
@@ -54,6 +54,30 @@ export default function Profile() {
       earnings: "0 SUI",
     },
   ])
+
+  // 🟢 Fetch user profile when component mounts
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const user = auth.currentUser
+      if (!user) return
+
+      try {
+        const userRef = doc(db, "users", user.uid)
+        const snap = await getDoc(userRef)
+
+        if (snap.exists()) {
+          const data = snap.data()
+          if (data.profile) setProfile(data.profile)
+          if (data.socialLinks) setSocialLinks(data.socialLinks)
+          if (data.donationLinks) setDonationLinks(data.donationLinks)
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err)
+      }
+    }
+
+    fetchProfile()
+  }, [])
 
   const updateProfile = (field: keyof Profile, value: string) => {
     setProfile((prev) => ({ ...prev, [field]: value }))
@@ -71,9 +95,9 @@ export default function Profile() {
   const uploadToCloudinary = async (file: File) => {
     const formData = new FormData()
     formData.append("file", file)
-    formData.append("upload_preset", "your_unsigned_preset") // from Cloudinary
+    formData.append("upload_preset", "upload_profile") // from Cloudinary
 
-    const res = await fetch(`https://api.cloudinary.com/v1_1/dfa58do65/image/upload`, {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dlurh2boh/image/upload`, {
       method: "POST",
       body: formData,
     })
@@ -90,31 +114,30 @@ export default function Profile() {
   }
 
   const cleanObject = (obj: Record<string, any>) => {
-  return Object.fromEntries(
-    Object.entries(obj).map(([k, v]) => [k, v ?? null]) // replace undefined with null
-  )
-}
-
-
-const saveProfile = async () => {
-  const user = auth.currentUser
-  if (!user) return alert("You must be signed in with Google first")
-
-  try {
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      email: user.email,
-      profile: cleanObject(profile),
-      socialLinks: cleanObject(socialLinks),
-      donationLinks: donationLinks.map((link) => cleanObject(link)),
-      createdAt: new Date().toISOString(),
-    })
-    alert("Profile saved successfully!")
-  } catch (err) {
-    console.error("Error saving profile:", err)
-    alert("Error saving profile")
+    return Object.fromEntries(
+      Object.entries(obj).map(([k, v]) => [k, v ?? null]) // replace undefined with null
+    )
   }
-}
+
+  const saveProfile = async () => {
+    const user = auth.currentUser
+    if (!user) return alert("You must be signed in with Google first")
+
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        profile: cleanObject(profile),
+        socialLinks: cleanObject(socialLinks),
+        donationLinks: donationLinks.map((link) => cleanObject(link)),
+        createdAt: new Date().toISOString(),
+      })
+      alert("Profile saved successfully!")
+    } catch (err) {
+      console.error("Error saving profile:", err)
+      alert("Error saving profile")
+    }
+  }
 
 
   return (
